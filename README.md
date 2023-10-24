@@ -1,10 +1,7 @@
-# ScpsInfoDisplay ![Downloads](https://img.shields.io/github/downloads/bladuk/ScpsInfoDisplay/total.svg)
 When SCP spawns, displays information about players who are in the SCP team. Possible integration with custom roles.
 
 ## How to install plugin?
-[For Northwood API](https://github.com/bladuk/ScpsInfoDisplay/blob/main/ScpsInfoDisplay-NWAPI/README.md)
-
-[For EXILED](https://github.com/bladuk/ScpsInfoDisplay/blob/main/ScpsInfoDisplay/README.md)
+You should know how Exiled Plugins work by now. Put it in your Exiled Plugin Folder and restart the server
 
 ## String variables
 | Variable  | Meaning |
