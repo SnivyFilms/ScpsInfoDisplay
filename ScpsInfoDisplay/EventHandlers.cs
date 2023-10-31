@@ -14,7 +14,7 @@ namespace ScpsInfoDisplay
     internal class EventHandlers
     {
         private CoroutineHandle _displayCoroutine;
-        
+
         internal void OnRoundStarted()
         {
             if (_displayCoroutine.IsRunning)
@@ -33,7 +33,7 @@ namespace ScpsInfoDisplay
                     foreach (var player in Player.List.Where(p => p != null && (ScpsInfoDisplay.Singleton.Config.DisplayStrings.ContainsKey(p.Role.Type) || ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations.Keys.Any(key => p.SessionVariables.ContainsKey(key)))))
                     {
                         var builder = StringBuilderPool.Shared.Rent($"<align={ScpsInfoDisplay.Singleton.Config.TextAlignment.ToString().ToLower()}>");
-                        
+
                         foreach (var integration in ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations)
                         {
                             builder.Append(Player.List.Where(p => p?.SessionVariables.ContainsKey(integration.Key) == true).Aggregate(builder.ToString(), (current, any) => current + (player == any ? ScpsInfoDisplay.Singleton.Config.PlayersMarker : "") + ProcessStringVariables(integration.Value, player, any))).Append('\n');
@@ -47,7 +47,7 @@ namespace ScpsInfoDisplay
                         builder.Append($"<voffset={ScpsInfoDisplay.Singleton.Config.TextPositionOffset}em> </voffset></align>");
                         player.ShowHint(StringBuilderPool.Shared.ToStringReturn(builder), 1.25f);
                     }
-                } 
+                }
                 catch (Exception ex)
                 {
                     Log.Error(ex);
@@ -66,6 +66,7 @@ namespace ScpsInfoDisplay
             .Replace("%079level%", target.Role.Is(out Scp079Role scp079) ? scp079.Level.ToString() : "")
             .Replace("%079energy%", target.Role.Is(out Scp079Role _) ? Math.Floor(scp079.Energy).ToString() : "")
             .Replace("%079experience%", target.Role.Is(out Scp079Role _) ? Math.Floor((double)scp079.Experience).ToString() : "")
-            .Replace("%106vigor%", target.Role.Is(out Scp106Role scp106) ? Math.Floor(scp106.Vigor * 100).ToString() : "");
+            .Replace("%106vigor%", target.Role.Is(out Scp106Role scp106) ? Math.Floor(scp106.Vigor * 100).ToString() : "")
+            .Replace("%3114disguisetype%", target.Role.Is(out Scp3114Role scp3114) ? (scp3114.DisguiseStatus.ToString() != "None" ? scp3114.StolenRole.ToString() : "None") : "");
     }
 }
