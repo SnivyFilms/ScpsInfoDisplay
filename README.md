@@ -17,6 +17,6 @@ You should know how Exiled Plugins work by now. Put it in your Exiled Plugin Fol
 | `%079experience%` | Experience points of SCP-079 |
 | `%079energy%` | Aux power of SCP-079 |
 | `%106vigor%` | Vigor amount of SCP-106 |
-| `%13114disguisetype%` | Says the disguise of SCP-3114 (or none if it doesnt have one) |
+| `%3114disguisetype%` | Says the disguise of SCP-3114 (or none if it doesnt have one) |
 
 Feel free to use this variables in display strings.
