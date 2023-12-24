@@ -62,7 +62,7 @@ namespace ScpsInfoDisplay
             .Replace("%generators%", Generator.List.Count(gen => gen.IsEngaged).ToString())
             .Replace("%engaging%", Generator.List.Count(gen => gen.IsActivating) > 0 ? $" (+{Generator.List.Count(gen => gen.IsActivating)})" : "")
             .Replace("%distance%", target != observer ? Math.Floor(Vector3.Distance(observer.Position, target.Position)) + "m" : "")
-            .Replace("%zombies%", Player.List.Count(p => p.Role.Type == RoleTypeId.Scp0492).ToString())
+            .Replace("%zombies%", Player.List.Count(p => p.Role.Type == RoleTypeId.Scp0492 || p.Role.Type == RoleTypeId.ZombieFlamingo).ToString())
             .Replace("%079level%", target.Role.Is(out Scp079Role scp079) ? scp079.Level.ToString() : "")
             .Replace("%079energy%", target.Role.Is(out Scp079Role _) ? Math.Floor(scp079.Energy).ToString() : "")
             .Replace("%079experience%", target.Role.Is(out Scp079Role _) ? Math.Floor((double)scp079.Experience).ToString() : "")
