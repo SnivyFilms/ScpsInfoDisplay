@@ -3,6 +3,7 @@ using Exiled.API.Features.Roles;
 using MEC;
 using NorthwoodLib.Pools;
 using PlayerRoles;
+using PlayerRoles.PlayableScps.Scp096;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +68,8 @@ namespace ScpsInfoDisplay
             .Replace("%079energy%", target.Role.Is(out Scp079Role _) ? Math.Floor(scp079.Energy).ToString() : "")
             .Replace("%079experience%", target.Role.Is(out Scp079Role _) ? Math.Floor((double)scp079.Experience).ToString() : "")
             .Replace("%106vigor%", target.Role.Is(out Scp106Role scp106) ? Math.Floor(scp106.Vigor * 100).ToString() : "")
-            .Replace("%3114disguisetype%", target.Role.Is(out Scp3114Role scp3114) ? (scp3114.DisguiseStatus.ToString() != "None" ? scp3114.StolenRole.ToString() : "None") : "");
+            .Replace("%3114disguisetype%", target.Role.Is(out Scp3114Role scp3114) ? (scp3114.DisguiseStatus.ToString() != "None" ? scp3114.StolenRole.ToString() : "None") : "")
+            .Replace("%096state%", target.Role.Is(out Exiled.API.Features.Roles.Scp096Role scp096) ? (scp096.RageState == Scp096RageState.Docile ? "Calm" : (scp096.RageState == Scp096RageState.Distressed ? "Enraging" : (scp096.RageState == Scp096RageState.Enraged ? "Enraged" : "Calming"))) : "")
+            .Replace("%173stared%", target.Role.Is(out Scp173Role scp173) ? (scp173.IsObserved ? "ⓞ" : "-") : "");
     }
 }
