@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Features;
 using Exiled.API.Features.Roles;
+using Exiled.CustomRoles.API.Features;
 using MEC;
 using NorthwoodLib.Pools;
 using PlayerRoles;
@@ -31,7 +32,7 @@ namespace ScpsInfoDisplay
                 yield return Timing.WaitForSeconds(1f);
                 try
                 {
-                    foreach (var player in Player.List.Where(p => p != null && (ScpsInfoDisplay.Singleton.Config.DisplayStrings.ContainsKey(p.Role.Type) || ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations.Keys.Any(key => p.SessionVariables.ContainsKey(key)))))
+                    foreach (var player in Player.List.Where(p => p != null && (ScpsInfoDisplay.Singleton.Config.DisplayStrings.ContainsKey(p.Role.Type) || ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations.Keys.Any(key => CustomRole.Registered.Any(r => r.Name == key)))))
                     {
                         var builder = StringBuilderPool.Shared.Rent($"<align={ScpsInfoDisplay.Singleton.Config.TextAlignment.ToString().ToLower()}>");
 

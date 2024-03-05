@@ -19,7 +19,7 @@ namespace ScpsInfoDisplay
             { RoleTypeId.Scp106, "<color=#FF0000><size=30>SCP-106</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>] \n<color=#FF19FF>Vigor: %106vigor%% </size></color>" },
             { RoleTypeId.Scp173, "<color=#FF0000><size=30>SCP-173</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>, <color=#FF19FF>%173stared%</color>]</size>"},
             { RoleTypeId.Scp939, "<color=#FF0000><size=30>SCP-939</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>] </size>" },
-            { RoleTypeId.Scp3114, "<color=#FF0000><size=30>SCP-3114</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>]</size>" }
+            { RoleTypeId.Scp3114, "<color=#FF0000><size=30>SCP-3114</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>, <color=#FF19FF>%3114disguisetype%</color>]</size>" }
         };
         [Description("Custom roles integrations. Format: SessionVariable that marks that the player belongs to that role, display string.")]
         public Dictionary<string, string> CustomRolesIntegrations { get; set; } = new Dictionary<string, string>();
