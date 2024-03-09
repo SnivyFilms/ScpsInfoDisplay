@@ -19,6 +19,8 @@ You should know how Exiled Plugins work by now. Put it in your Exiled Plugin Fol
 | `%106vigor%` | Vigor amount of SCP-106 |
 | `%3114disguisetype%` | Says the disguise of SCP-3114 (or none if it doesnt have one) |
 | `%096state%` | Shows the state that 096 is in (docile, enraging, enraged, or calming down) |
+| `%096targets%` | Shows the amount of targets that 096 has |
 | `%173stare%` | Shows if 173 is being stared at or not |
+| `%playername%` | Gets the player's name of the SCP |
 
 Feel free to use this variables in display strings.
