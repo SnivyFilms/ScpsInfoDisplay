@@ -15,7 +15,7 @@ namespace ScpsInfoDisplay
         {
             { RoleTypeId.Scp049, "<color=#FF0000><size=30>SCP-049</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>]\n<color=#FF19FF>Zombies: %zombies%</color></size>" },
             { RoleTypeId.Scp079, "<color=#FF0000><size=30>SCP-079</color> <color=#19FF40>Generators:</color> [<color=#19FF40>%generators%</color><color=#FF0000>%engaging%</color><color=#19FF40>/3</color>]\n <color=#19B2FF>Level: %079level%</color> <color=#FF19FF>Energy: %079energy%</color></size>" },
-            { RoleTypeId.Scp096, "<color=#FF0000><size=30>SCP-096</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>] \n<color=#FF19FF>Rage State: %096state% </size></color></size>" },
+            { RoleTypeId.Scp096, "<color=#FF0000><size=30>SCP-096</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>] \n<color=#19B2FF>Rage State: %096state%</color>, <color=#FF19FF>Targets: %096targets%</color></size>" },
             { RoleTypeId.Scp106, "<color=#FF0000><size=30>SCP-106</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>] \n<color=#FF19FF>Vigor: %106vigor%% </size></color>" },
             { RoleTypeId.Scp173, "<color=#FF0000><size=30>SCP-173</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>, <color=#FF19FF>%173stared%</color>]</size>"},
             { RoleTypeId.Scp939, "<color=#FF0000><size=30>SCP-939</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>] </size>" },
