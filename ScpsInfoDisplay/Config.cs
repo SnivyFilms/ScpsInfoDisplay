@@ -10,6 +10,8 @@ namespace ScpsInfoDisplay
     {
         [Description("Is the plugin enabled?")]
         public bool IsEnabled { get; set; } = true;
+        [Description("Display debug messages in server console?")]
+        public bool Debug { get; set; } = false;
         [Description("Display strings. Format: Role, display string.")]
         public Dictionary<RoleTypeId, string> DisplayStrings { get; set; } = new Dictionary<RoleTypeId, string>()
         {
@@ -29,7 +31,21 @@ namespace ScpsInfoDisplay
         public sbyte TextPositionOffset { get; set; } = 30;
         [Description("The player seeing the list will be highlighted with the special marker to the left. Leave it empty if disabled.")]
         public string PlayersMarker { get; set; } = "<color=#D7E607><size=30>You: </size></color>";
-        [Description("Display debug messages in server console?")]
-        public bool Debug { get; set; } = false;
+        [Description("The disguise text display for SCP-3114.")]
+        public Dictionary<RoleTypeId, string> Scp3114DisguiseDisplay { get; set; } = new Dictionary<RoleTypeId, string>()
+        {
+            { RoleTypeId.ClassD, "D-Class"},
+            { RoleTypeId.Scientist, "Scientist"},
+            { RoleTypeId.FacilityGuard, "Facility Guard"},
+            { RoleTypeId.NtfCaptain, "MTF Captain"},
+            { RoleTypeId.NtfSergeant, "MTF Sergeant"},
+            { RoleTypeId.NtfSpecialist, "MTF Specialist"},
+            { RoleTypeId.NtfPrivate, "MTF Private"},
+            { RoleTypeId.ChaosConscript, "Chaos Conscript"},
+            { RoleTypeId.ChaosMarauder, "Chaos Marauder"},
+            { RoleTypeId.ChaosRepressor, "Chaos Repressor"},
+            { RoleTypeId.ChaosRifleman, "Chaos Rifleman"},
+            { RoleTypeId.Tutorial, "Tutorial"}
+        };
     }
 }
