@@ -1,4 +1,5 @@
 ![Downloads](https://img.shields.io/github/downloads/SnivyFilms/ScpsInfoDisplay/total.svg)
+
 When SCP spawns, displays information about players who are in the SCP team. Possible integration with custom roles.
 
 ## How to install plugin?
