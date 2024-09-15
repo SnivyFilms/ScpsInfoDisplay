@@ -3,6 +3,7 @@ using PlayerRoles;
 using ScpsInfoDisplay.Enums;
 using System.Collections.Generic;
 using System.ComponentModel;
+using PlayerRoles.PlayableScps.Scp096;
 
 namespace ScpsInfoDisplay
 {
@@ -23,8 +24,8 @@ namespace ScpsInfoDisplay
             { RoleTypeId.Scp939, "<color=#FF0000><size=30>SCP-939</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>] </size>" },
             { RoleTypeId.Scp3114, "<color=#FF0000><size=30>SCP-3114</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>, <color=#FF19FF>%3114disguisetype%</color>]</size>" }
         };
-        [Description("Custom roles integrations. Format: SessionVariable that marks that the player belongs to that role, display string.")]
-        public Dictionary<string, string> CustomRolesIntegrations { get; set; } = new Dictionary<string, string>();
+        /*[Description("Custom roles integrations. Format: SessionVariable that marks that the player belongs to that role, display string.")]
+        public Dictionary<string, string> CustomRolesIntegrations { get; set; } = new Dictionary<string, string>();*/
         [Description("Display string alignment. Possible values: Left, Center, Right.")]
         public TextAlignment TextAlignment { get; set; } = TextAlignment.Right;
         [Description("Display text position offset.")]
@@ -46,6 +47,21 @@ namespace ScpsInfoDisplay
             { RoleTypeId.ChaosRepressor, "Chaos Repressor"},
             { RoleTypeId.ChaosRifleman, "Chaos Rifleman"},
             { RoleTypeId.Tutorial, "Tutorial"}
+        };
+
+        [Description("Indicators for SCP-173 %173stared%")]
+        public Dictionary<string, string> Scp173ObservationIndicators { get; set; } = new Dictionary<string, string>
+        {
+            { "Observed", "ⓞ" },
+            { "Unobserved", "-" }
+        };
+        [Description("Indicators for SCP-096 %096state%")]
+        public Dictionary<Scp096RageState, string> Scp096StateIndicator { get; set; } = new Dictionary<Scp096RageState, string>
+        {
+            { Scp096RageState.Docile, "Calm"},
+            { Scp096RageState.Distressed, "Enraging"},
+            { Scp096RageState.Enraged, "Enraged"},
+            { Scp096RageState.Calming, "Calming"}
         };
     }
 }
