@@ -24,8 +24,15 @@ namespace ScpsInfoDisplay
             { RoleTypeId.Scp939, "<color=#FF0000><size=30>SCP-939</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>] </size>" },
             { RoleTypeId.Scp3114, "<color=#FF0000><size=30>SCP-3114</color> [<color=#19FF40>%health%</color>, <color=#19B2FF>%arhealth%</color>, <color=#FF19FF>%3114disguisetype%</color>]</size>" }
         };
-        /*[Description("Custom roles integrations. Format: SessionVariable that marks that the player belongs to that role, display string.")]
-        public Dictionary<string, string> CustomRolesIntegrations { get; set; } = new Dictionary<string, string>();*/
+
+        [Description(
+            "Custom roles integrations. Format: SessionVariable that marks that the player belongs to that role, display string.")]
+        public Dictionary<string, string> CustomRolesIntegrations { get; set; } = new Dictionary<string, string>()
+        {
+            { "Serpents Hand Guardian", "<color=#ff00ff><size=30>Serpents Hand Guardian</color>[<color=#19FF40>%health%</color>]</size>"},
+            { "Serpents Hand Enchanter", "<color=#ff00ff><size=30>Serpents Hand Enchanter</color>[<color=#19FF40>%health%</color>]</size>"},
+            { "Serpents Hand Agent", "<color=#ff00ff><size=30>Serpents Hand Agent</color>[<color=#19FF40>%health%</color>]</size>"}
+        };
         [Description("Display string alignment. Possible values: Left, Center, Right.")]
         public TextAlignment TextAlignment { get; set; } = TextAlignment.Right;
         [Description("Display text position offset.")]

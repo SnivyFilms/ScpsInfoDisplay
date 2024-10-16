@@ -32,18 +32,23 @@ namespace ScpsInfoDisplay
                 yield return Timing.WaitForSeconds(1f);
                 try
                 {
-                    foreach (var player in Player.List.Where(p => p != null && (ScpsInfoDisplay.Singleton.Config.DisplayStrings.ContainsKey(p.Role.Type) /*|| ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations.Keys.Any(key => CustomRole.Registered.Any(r => r.Name == key))*/)))
+                    foreach (var player in Player.List.Where(p => p != null && (ScpsInfoDisplay.Singleton.Config.DisplayStrings.ContainsKey(p.Role.Type) || CustomRole.Registered.Any(customRole => customRole.TrackedPlayers.Contains(p)))))
                     {
                         var builder = StringBuilderPool.Shared.Rent($"<align={ScpsInfoDisplay.Singleton.Config.TextAlignment.ToString().ToLower()}>");
-
-                        /*foreach (var integration in ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations)
+                        
+                        foreach (var scp in Player.List.Where(p => p?.Role.Team == Team.SCPs && (ScpsInfoDisplay.Singleton.Config.DisplayStrings.ContainsKey(p.Role.Type) || CustomRole.Registered.Any(customRole => customRole.TrackedPlayers.Contains(p)))))
                         {
-                            builder.Append(Player.List.Where(p => p?.SessionVariables.ContainsKey(integration.Key) == true).Aggregate(builder.ToString(), (current, any) => current + (player == any ? ScpsInfoDisplay.Singleton.Config.PlayersMarker : "") + ProcessStringVariables(integration.Value, player, any))).Append('\n');
-                        }*/
+                            builder.Append((scp == player ? ScpsInfoDisplay.Singleton.Config.PlayersMarker : "") 
+                                           + ProcessStringVariables(ScpsInfoDisplay.Singleton.Config.DisplayStrings[scp.Role.Type], player, scp)).Append('\n');
+                        }
 
-                        foreach (var scp in Player.List.Where(p => p?.Role.Team == Team.SCPs && ScpsInfoDisplay.Singleton.Config.DisplayStrings.ContainsKey(p.Role.Type)))
+                        foreach (var customRole in CustomRole.Registered)
                         {
-                            builder.Append((scp == player ? ScpsInfoDisplay.Singleton.Config.PlayersMarker : "") + ProcessStringVariables(ScpsInfoDisplay.Singleton.Config.DisplayStrings[scp.Role.Type], player, scp)).Append('\n');
+                            foreach (var customPlayer in customRole.TrackedPlayers)
+                            {
+                                builder.Append((customPlayer == player ? ScpsInfoDisplay.Singleton.Config.PlayersMarker : "") 
+                                               + ProcessCustomRoleVariables(customRole, customPlayer)).Append('\n');
+                            }
                         }
 
                         builder.Append($"<voffset={ScpsInfoDisplay.Singleton.Config.TextPositionOffset}em> </voffset></align>");
@@ -74,6 +79,18 @@ namespace ScpsInfoDisplay
             .Replace("%096targets%", target.Role.Is(out Exiled.API.Features.Roles.Scp096Role _) ? scp096.Targets.Count.ToString() : "")
             .Replace("%173stared%", target.Role.Is(out Scp173Role scp173) ? (_config.Scp173ObservationIndicators.TryGetValue(scp173.IsObserved ? "Observed" : "Unobserved", out var icon) ? icon : "-") : "")
             .Replace("%playername%", target.Nickname);
+        
+        private string ProcessCustomRoleVariables(CustomRole customRole, Player observer)
+        {
+            var raw = ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations.TryGetValue(customRole.Name, out var value) ? value : "";
+
+            return raw
+                .Replace("%customrole%", customRole.Name)
+                .Replace("%playername%", observer.Nickname)
+                .Replace("%health%", Math.Floor(observer.Health).ToString())
+                .Replace("%healthpercent%",
+                    Math.Floor(observer.ArtificialHealth) >= 0 ? Math.Floor(observer.ArtificialHealth).ToString() : "");
+        }
 
         private string SkeletonDisguiseNames(RoleTypeId disguise)
         {
