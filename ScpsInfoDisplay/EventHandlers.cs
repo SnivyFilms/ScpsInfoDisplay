@@ -17,7 +17,7 @@ namespace ScpsInfoDisplay
     internal class EventHandlers
     {
         private CoroutineHandle _displayCoroutine;
-        public static Config Config = ScpsInfoDisplay.Singleton.Config;
+        public static Config Config = ScpsInfoDisplay.Instance.Config;
         internal void OnRoundStarted()
         {
             if (_displayCoroutine.IsRunning)
@@ -35,32 +35,32 @@ namespace ScpsInfoDisplay
                 {
                     foreach (Player player in Player.List.Where(p => p != null && ShouldDisplayForPlayer(p)))
                     {
-                        StringBuilder builder = StringBuilderPool.Shared.Rent($"<align={ScpsInfoDisplay.Singleton.Config.TextAlignment.ToString().ToLower()}>");
+                        StringBuilder builder = StringBuilderPool.Shared.Rent($"<align={Config.TextAlignment.ToString().ToLower()}>");
 
                         // Display SCPs
                         foreach (Player scp in Player.List.Where(p => p?.Role.Team == Team.SCPs && ShouldDisplayForPlayer(p)))
                         {
-                            if (ScpsInfoDisplay.Singleton.Config.DisplayStrings.ContainsKey(scp.Role.Type))
+                            if (Config.DisplayStrings.ContainsKey(scp.Role.Type))
                             {
-                                builder.Append((scp == player ? ScpsInfoDisplay.Singleton.Config.PlayersMarker : string.Empty)
-                                               + ProcessStringVariables(ScpsInfoDisplay.Singleton.Config.DisplayStrings[scp.Role.Type], player, scp)).Append('\n');
+                                builder.Append((scp == player ? Config.PlayersMarker : string.Empty)
+                                               + ProcessStringVariables(Config.DisplayStrings[scp.Role.Type], player, scp)).Append('\n');
                             }
                         }
 
                         // Display Custom Roles, but only the ones defined in CustomRolesIntegrations
                         foreach (CustomRole customRole in CustomRole.Registered)
                         {
-                            if (ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations.ContainsKey(customRole.Name))
+                            if (Config.CustomRolesIntegrations.ContainsKey(customRole.Name))
                             {
                                 foreach (Player customPlayer in customRole.TrackedPlayers)
                                 {
-                                    builder.Append((customPlayer == player ? ScpsInfoDisplay.Singleton.Config.PlayersMarker : string.Empty)
+                                    builder.Append((customPlayer == player ? Config.PlayersMarker : string.Empty)
                                                    + ProcessCustomRoleVariables(customRole, customPlayer)).Append('\n');
                                 }
                             }
                         }
 
-                        builder.Append($"<voffset={ScpsInfoDisplay.Singleton.Config.TextPositionOffset}em> </voffset></align>");
+                        builder.Append($"<voffset={Config.TextPositionOffset}em> </voffset></align>");
                         player.ShowHint(StringBuilderPool.Shared.ToStringReturn(builder), 1.25f);
                     }
                 }
@@ -72,9 +72,9 @@ namespace ScpsInfoDisplay
         }
         private bool ShouldDisplayForPlayer(Player player)
         {
-            return ScpsInfoDisplay.Singleton.Config.DisplayStrings.ContainsKey(player.Role.Type) ||
+            return Config.DisplayStrings.ContainsKey(player.Role.Type) ||
                    CustomRole.Registered.Any(customRole => customRole.TrackedPlayers.Contains(player) && 
-                                                           ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations.ContainsKey(customRole.Name));
+                                                           Config.CustomRolesIntegrations.ContainsKey(customRole.Name));
         }
 
         private string ProcessStringVariables(string raw, Player observer, Player target) => raw
@@ -96,7 +96,7 @@ namespace ScpsInfoDisplay
             .Replace("%playername%", target.Nickname);
 
         private string ProcessCustomRoleVariables(CustomRole customRole, Player observer) => 
-            ScpsInfoDisplay.Singleton.Config.CustomRolesIntegrations.TryGetValue(customRole.Name, out var value) ? value : string.Empty
+            Config.CustomRolesIntegrations.TryGetValue(customRole.Name, out var value) ? value : string.Empty
             .Replace("%customrole%", customRole.Name)
             .Replace("%playername%", observer.Nickname)
             .Replace("%health%", Math.Floor(observer.Health).ToString())

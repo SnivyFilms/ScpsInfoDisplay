@@ -9,14 +9,14 @@ namespace ScpsInfoDisplay
         public override string Prefix => "scpsinfodisplay";
         public override string Name => "ScpsInfoDisplay";
         public override string Author => "Bladuk and Vicious Vikki";
-        public override Version Version { get; } = new Version(2, 2, 0);
-        public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0,4);
-        public static ScpsInfoDisplay Singleton = new ScpsInfoDisplay();
+        public override Version Version { get; } = new Version(2, 2, 1);
+        public override Version RequiredExiledVersion { get; } = new Version(9, 0, 0, 4);
+        public static ScpsInfoDisplay Instance;
         public EventHandlers EventHandlers;
 
         public override void OnEnabled()
         {
-            Singleton = this;
+            Instance = this;
             EventHandlers = new EventHandlers();
 
             RegisterEvents();
@@ -28,7 +28,7 @@ namespace ScpsInfoDisplay
         {
             UnregisterEvents();
             EventHandlers = null;
-            Singleton = null;
+            Instance = null;
 
             base.OnDisabled();
         }
