@@ -89,8 +89,8 @@ namespace ScpsInfoDisplay
             .Replace("%079experience%", target.Role.Is(out Scp079Role _) ? Math.Floor((double)scp079.Experience).ToString() : string.Empty)
             .Replace("%106vigor%", target.Role.Is(out Scp106Role scp106) ? Math.Floor(scp106.Vigor * 100).ToString() : string.Empty)
             .Replace("%3114disguisetype%", target.Role.Is(out Scp3114Role scp3114) ? (scp3114.DisguiseStatus.ToString() != "None" ? SkeletonDisguiseNames(scp3114.StolenRole) : "None") : string.Empty)
-            .Replace("%096state%", target.Role.Is(out Exiled.API.Features.Roles.Scp096Role scp096) ? (ScpsInfoDisplay.Instance.Config.Scp096StateIndicator.TryGetValue(scp096.RageState, out var stateIcon) ? stateIcon : "Unknown") : string.Empty)
-            .Replace("%096targets%", target.Role.Is(out Exiled.API.Features.Roles.Scp096Role _) ? scp096.Targets.Count.ToString() : string.Empty)
+            .Replace("%096state%", target.Role.Is(out Scp096Role scp096) ? (ScpsInfoDisplay.Instance.Config.Scp096StateIndicator.TryGetValue(scp096.RageState, out var stateIcon) ? stateIcon : "Unknown") : string.Empty)
+            .Replace("%096targets%", target.Role.Is(out Scp096Role _) ? scp096.Targets.Count.ToString() : string.Empty)
             .Replace("%173stared%", target.Role.Is(out Scp173Role scp173) ? (ScpsInfoDisplay.Instance.Config.Scp173ObservationIndicators.TryGetValue(scp173.IsObserved ? "Observed" : "Unobserved", out var icon) ? icon : "-") : string.Empty)
             .Replace("%playername%", target.Nickname);
 
