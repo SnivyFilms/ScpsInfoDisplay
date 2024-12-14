@@ -4,13 +4,13 @@ using Exiled.CustomRoles.API.Features;
 using MEC;
 using NorthwoodLib.Pools;
 using PlayerRoles;
-using PlayerRoles.PlayableScps.Scp096;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 using Player = Exiled.API.Features.Player;
+using StringBuilderPool = Exiled.API.Features.Pools.StringBuilderPool;
 
 namespace ScpsInfoDisplay
 {
@@ -34,8 +34,9 @@ namespace ScpsInfoDisplay
                 {
                     foreach (Player player in Player.List.Where(p => p != null && ShouldDisplayForPlayer(p)))
                     {
-                        StringBuilder builder = StringBuilderPool.Shared.Rent($"<align={ScpsInfoDisplay.Instance.Config.TextAlignment.ToString().ToLower()}>");
-
+                        StringBuilder builder = StringBuilderPool.Pool.Get();
+                        builder.Append($"<align={ScpsInfoDisplay.Instance.Config.TextAlignment.ToString().ToLower()}>");
+                        
                         // Display SCPs
                         foreach (Player scp in Player.List.Where(p => p?.Role.Team == Team.SCPs && ShouldDisplayForPlayer(p)))
                         {
@@ -58,9 +59,8 @@ namespace ScpsInfoDisplay
                                 }
                             }
                         }
-
                         builder.Append($"<voffset={ScpsInfoDisplay.Instance.Config.TextPositionOffset}em> </voffset></align>");
-                        player.ShowHint(StringBuilderPool.Shared.ToStringReturn(builder), 1.25f);
+                        player.ShowHint(StringBuilderPool.Pool.ToStringReturn(builder), 1.25f);
                     }
                 }
                 catch (Exception ex)
@@ -94,12 +94,20 @@ namespace ScpsInfoDisplay
             .Replace("%173stared%", target.Role.Is(out Scp173Role scp173) ? (ScpsInfoDisplay.Instance.Config.Scp173ObservationIndicators.TryGetValue(scp173.IsObserved ? "Observed" : "Unobserved", out var icon) ? icon : "-") : string.Empty)
             .Replace("%playername%", target.Nickname);
 
-        private string ProcessCustomRoleVariables(CustomRole customRole, Player observer) => 
-            ScpsInfoDisplay.Instance.Config.CustomRolesIntegrations.TryGetValue(customRole.Name, out var value) ? value : string.Empty
-            .Replace("%customrole%", customRole.Name)
-            .Replace("%playername%", observer.Nickname)
-            .Replace("%health%", Math.Floor(observer.Health).ToString())
-            .Replace("%healthpercent%", Math.Floor(observer.ArtificialHealth) >= 0 ? Math.Floor(observer.ArtificialHealth).ToString() : string.Empty);
+        private string ProcessCustomRoleVariables(CustomRole customRole, Player observer)
+        {
+            // Get the template from the configuration
+            if (ScpsInfoDisplay.Instance.Config.CustomRolesIntegrations.TryGetValue(customRole.Name, out var template))
+            {
+                return template
+                    .Replace("%customrole%", customRole.Name)
+                    .Replace("%playername%", observer.Nickname)
+                    .Replace("%health%", Math.Floor(observer.Health).ToString())
+                    .Replace("%healthpercent%", observer.Health > 0 ? Math.Floor((observer.Health / observer.MaxHealth) * 100).ToString() : "0");
+            }
+            // Return an empty string if no integration is found
+            return string.Empty;
+        }
         
         private string SkeletonDisguiseNames(RoleTypeId disguise)
         {
